@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "src/index.js"
+    "start": "src/index.js && npm install prisma && npx prisma migrate dev"
+    
   },
   "keywords": [],
   "author": "",
