@@ -44,7 +44,6 @@ router.get("/appoinment", async (req, res) => {
 	try {
 		const users = await prisma.appointments.findMany()
 		res.status(200).json(users);
-		console.log(json(users))
 	} catch (error) {
 		console.log(error);
 	}
