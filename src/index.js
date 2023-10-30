@@ -1,13 +1,39 @@
-import express from "express";
-import usersRoutes from "./routes/users.routes.js";
+import express from "express"
+import usersRoutes from "./routes/users.routes.js"
 import 'dotenv/config'
-
-
-const PORT = process.env.PORT
+import swaggerUi from 'swagger-ui-express'
+import swaggerJsdoc from 'swagger-jsdoc'
 
 const app = express();
 
 app.use(express.json());
+const PORT = process.env.PORT
+
+
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'API de Usuarios',
+            version: '1.0.0',
+            description: 'Una API para gestionar usuarios',
+        },
+        servers: [
+            {
+                url: `http://localhost:${PORT}`, 
+            },
+        ],
+    },
+    apis: ['./routes/users.routes.js'], 
+};
+
+const specs = swaggerJsdoc(options);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+
+
+
 
 app.use("/", usersRoutes);
 
