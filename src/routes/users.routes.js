@@ -4,7 +4,6 @@ import { prisma } from "../db.js";
 const router = Router();
 
 router.get("/appoinment", async (req, res) => {
-
 	try {
 		const users = await prisma.appointments.findMany()
 		res.status(200).json(users);
@@ -15,23 +14,21 @@ router.get("/appoinment", async (req, res) => {
 });
 
 router.post("/appoinment", async (req, res)=>{
-	const auxAppoinment = await prisma.appointments.findUnique({
-		OR:[
-			{
-				where: {
-					id_doctor: Number(req.params.id_doctor),
-					start_time: req.params.start_time,
+	const auxAppoinment = await prisma.appointments.findFirst({
+		where: {
+			OR:[
+				{
+					id_doctor: Number(req.body.id_doctor),
+					start_time: req.body.start_time,
 				},
-			},
-			{
-				where: {
-					id_user: Number(req.params.id_user),
-					start_time: req.params.start_time,
+				{
+					id_user: Number(req.body.id_user),
+					start_time: req.body.start_time,
 				},
-			}
-		]
+			]
+		}
 	});
-	if(!auxAppoinment)
+	if(auxAppoinment)
 		return res.status(400).json({ error: "appoinment already exist"});
 
 	const appoinment= await prisma.appointments.create({
@@ -55,7 +52,7 @@ router.get("/appoinment/:id_appointment", async (req, res) => {
 
 router.patch("/update_appointment/:id_appointment", async (req, res) => {
 	try {
-		const appoinment = await prisma.appoinment.update({
+		const appoinment = await prisma.appointments.update({
 			where: {
 				id_appointment: Number(req.params.id_appointment),
 			},
@@ -63,22 +60,22 @@ router.patch("/update_appointment/:id_appointment", async (req, res) => {
 		});
 		res.json(appoinment);
 	} catch (error) {
-		if(!appoinment)
-			return res.status(404).json({ error: "appoinment not found"});
+		return res.status(404).json({ error: "appoinment not found"});
 	}
 });
 
 router.delete("/delete_appoinment/:id_appointment", async (req, res) => {
-	const appoinment = await prisma.appoinment.delete({
-		where: {
-			id_appointment: Number(req.params.id_appointment),
-		},
-	});
-
-	if(!appoinment)
+	try {
+		const appoinment = await prisma.appointments.delete({
+			where: {
+				id_appointment: Number(req.params.id_appointment),
+			},
+		});
+	
+		res.json(appoinment.quantity);
+	} catch (error) {
 		return res.status(404).json({ error: "appoinment not found"});
-
-	res.json(appoinment.quantity);
+	}
 });
 
 
