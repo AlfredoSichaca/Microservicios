@@ -14,6 +14,25 @@ router.get("/appoinment", async (req, res) => {
 });
 
 router.post("/appoinment", async (req, res)=>{
+	const auxAppoinment = await prisma.appointments.findUnique({
+		OR:[
+			{
+				where: {
+					id_doctor: Number(req.params.id_doctor),
+					start_time: req.params.start_time,
+				},
+			},
+			{
+				where: {
+					id_user: Number(req.params.id_user),
+					start_time: req.params.start_time,
+				},
+			}
+		]
+	});
+	if(!auxAppoinment)
+		return res.status(400).json({ error: "appoinment already exist"});
+
 	const appoinment= await prisma.appointments.create({
 		data: req.body,
 	});
@@ -27,6 +46,9 @@ router.get("/appoinment/:id_appointment", async (req, res) => {
 			id_appointment: Number(req.params.id_appointment),
 		}
 	});
+	if(!appoinment)
+		return res.status(404).json({ error: "appoinment not found"});
+
 	res.status(200).json(appoinment);
 });
 
@@ -40,7 +62,8 @@ router.patch("/update_appointment/:id_appointment", async (req, res) => {
 		});
 		res.json(appoinment);
 	} catch (error) {
-		next(error);
+		if(!appoinment)
+			return res.status(404).json({ error: "appoinment not found"});
 	}
 });
 
@@ -50,6 +73,10 @@ router.delete("/delete_appoinment/:id_appointment", async (req, res) => {
 			id_appointment: Number(req.params.id_appointment),
 		},
 	});
+
+	if(!appoinment)
+		return res.status(404).json({ error: "appoinment not found"});
+
 	res.json(appoinment.quantity);
 });
 

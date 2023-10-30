@@ -14,6 +14,8 @@ model appointments {
   notes          String              @db.VarChar(150)
   price_cop      Int
   end_time       String            @db.VarChar(150)
+  id_user        Int
+  id_doctor      Int
 }
 
 enum appointments_status {
