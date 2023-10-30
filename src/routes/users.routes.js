@@ -199,6 +199,40 @@ router.delete("/delete_appoinment/:id_appointment", async (req, res) => {
 	}
 });
 
+/**
+ * @swagger
+ * /appoinment_doctor/{id_doctor}:
+ *   get:
+ *     summary: Obtener las citas de cada medico
+ *     tags: [Appointments]
+ *     parameters:
+ *       - in: path
+ *         name: id_doctor
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID del médico
+ *     responses:
+ *       200:
+ *         description: Datos de la cita médica obtenidos con éxito
+ *       404:
+ *         description: Cita médica no encontrada
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.get("/appoinment_doctor/:id_doctor", async (req, res) => {
+	const appoinment = await prisma.appointments.findMany({
+		where: {
+			id_doctor: Number(req.params.id_doctor),
+		}
+	});
+	if(!appoinment)
+		return res.status(404).json({ error: "appoinment not found"});
+
+	res.status(200).json(appoinment);
+});
+ 
+
 
 
 export default router;
