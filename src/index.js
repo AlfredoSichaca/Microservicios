@@ -14,9 +14,9 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'API de Usuarios',
+            title: 'API de Citas',
             version: '1.0.0',
-            description: 'Una API para gestionar usuarios',
+            description: 'Una API para gestionar citas ',
         },
         servers: [
             {
@@ -24,7 +24,7 @@ const options = {
             },
         ],
     },
-    apis: ['./routes/users.routes.js'], 
+    apis: ['src/routes/*.js'], 
 };
 
 const specs = swaggerJsdoc(options);
