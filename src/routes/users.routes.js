@@ -42,7 +42,7 @@ const router = Router();
  *         description: Lista de citas
  */
 
-router.get("/appoinment", async (req, res) => {
+router.get("/appoinment", cors(), async (req, res) => {
 	try {
 		const users = await prisma.appointments.findMany()
 		res.status(200).json(users);
@@ -50,7 +50,7 @@ router.get("/appoinment", async (req, res) => {
 		console.log(error);
 		
 	}
-},cors);
+});
 /**
  * @swagger
  * /appoinment:
@@ -70,7 +70,7 @@ router.get("/appoinment", async (req, res) => {
  *         description: Error interno del servidor
  */
 
-router.post("/appoinment", async (req, res)=>{
+router.post("/appoinment", cors(), async (req, res)=>{
 	const auxAppoinment = await prisma.appointments.findFirst({
 		where: {
 			OR:[
@@ -93,7 +93,7 @@ router.post("/appoinment", async (req, res)=>{
 	});
 	res.json(appoinment)
 	
-}, cors)
+})
 
 
 /**
@@ -119,7 +119,7 @@ router.post("/appoinment", async (req, res)=>{
  */
 
 
-router.get("/appoinment/:id_appointment", async (req, res) => {
+router.get("/appoinment/:id_appointment",cors(), async (req, res) => {
 	const appoinment = await prisma.appointments.findUnique({
 		where: {
 			id_appointment: Number(req.params.id_appointment),
@@ -129,7 +129,7 @@ router.get("/appoinment/:id_appointment", async (req, res) => {
 		return res.status(404).json({ error: "appoinment not found"});
 
 	res.status(200).json(appoinment);
-},cors);
+});
 /**
  * @swagger
  * /update_appointment/{id_appointment}:
@@ -168,7 +168,7 @@ router.patch("/update_appointment/:id_appointment", async (req, res) => {
 	} catch (error) {
 		return res.status(404).json({ error: "appoinment not found"});
 	}
-},cors);
+},cors());
 /**
  * @swagger
  * /delete_appoinment/{id_appointment}:
@@ -200,7 +200,7 @@ router.delete("/delete_appoinment/:id_appointment", async (req, res) => {
 	} catch (error) {
 		return res.status(404).json({ error: "appoinment not found"});
 	}
-},cors);
+},cors());
 
 /**
  * @swagger
@@ -233,7 +233,7 @@ router.get("/appoinment_doctor/:id_doctor", async (req, res) => {
 		return res.status(404).json({ error: "appoinment not found"});
 
 	res.status(200).json(appoinment);
-},cors);
+},cors());
  
 
 
