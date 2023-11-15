@@ -46,6 +46,7 @@ router.get("/appoinment", async (req, res) => {
 		res.status(200).json(users);
 	} catch (error) {
 		console.log(error);
+		
 	}
 });
 /**

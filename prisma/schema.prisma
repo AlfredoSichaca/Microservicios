@@ -19,6 +19,7 @@ model appointments {
 }
 
 enum appointments_status {
-  Pagada
-  Deuda
+  active
+  cancelled
+  in_progress
 }
