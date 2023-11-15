@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { prisma } from "../db.js";
+import cors from 'cors';
+
 
 const router = Router();
 
@@ -48,7 +50,7 @@ router.get("/appoinment", async (req, res) => {
 		console.log(error);
 		
 	}
-});
+},cors);
 /**
  * @swagger
  * /appoinment:
@@ -91,7 +93,7 @@ router.post("/appoinment", async (req, res)=>{
 	});
 	res.json(appoinment)
 	
-})
+}, cors)
 
 
 /**
@@ -127,7 +129,7 @@ router.get("/appoinment/:id_appointment", async (req, res) => {
 		return res.status(404).json({ error: "appoinment not found"});
 
 	res.status(200).json(appoinment);
-});
+},cors);
 /**
  * @swagger
  * /update_appointment/{id_appointment}:
@@ -166,7 +168,7 @@ router.patch("/update_appointment/:id_appointment", async (req, res) => {
 	} catch (error) {
 		return res.status(404).json({ error: "appoinment not found"});
 	}
-});
+},cors);
 /**
  * @swagger
  * /delete_appoinment/{id_appointment}:
@@ -198,7 +200,7 @@ router.delete("/delete_appoinment/:id_appointment", async (req, res) => {
 	} catch (error) {
 		return res.status(404).json({ error: "appoinment not found"});
 	}
-});
+},cors);
 
 /**
  * @swagger
@@ -231,7 +233,7 @@ router.get("/appoinment_doctor/:id_doctor", async (req, res) => {
 		return res.status(404).json({ error: "appoinment not found"});
 
 	res.status(200).json(appoinment);
-});
+},cors);
  
 
 
