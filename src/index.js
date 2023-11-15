@@ -3,13 +3,18 @@ import usersRoutes from "./routes/users.routes.js"
 import 'dotenv/config'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsdoc from 'swagger-jsdoc'
-
-const app = express();
 import cors from 'cors';
 
-const white=[]
+
+const app = express();
+
 app.use(express.json());
-app.use(cors("http://localhost:5173"));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // o específica la URL permitida
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  });
 const PORT = process.env.PORT
 
 
