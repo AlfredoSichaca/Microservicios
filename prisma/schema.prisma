@@ -9,11 +9,11 @@ datasource db {
 
 model appointments {
   id_appointment Int                 @id @default(autoincrement())
-  start_time     String            @db.VarChar(150)
+  start_time     String              @db.VarChar(150)
   status         appointments_status
   notes          String              @db.VarChar(150)
   price_cop      Int
-  end_time       String            @db.VarChar(150)
+  end_time       String              @db.VarChar(150)
   id_user        Int
   id_doctor      Int
 }
