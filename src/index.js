@@ -7,9 +7,9 @@ import swaggerJsdoc from 'swagger-jsdoc'
 const app = express();
 import cors from 'cors';
 
-
+const white=[]
 app.use(express.json());
-app.use(cors());
+app.use(cors("http://localhost:5173"));
 const PORT = process.env.PORT
 
 
