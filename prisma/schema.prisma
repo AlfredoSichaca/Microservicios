@@ -12,7 +12,7 @@ model appointments {
   start_time     String              @db.VarChar(150)
   status         appointments_status
   notes          String              @db.VarChar(150)
-  price_cop      Int
+  price_cop      String              @db.VarChar(150)
   end_time       String              @db.VarChar(150)
   id_user        Int
   id_doctor      Int
