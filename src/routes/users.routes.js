@@ -19,7 +19,7 @@ const router = Router();
  *         notes:
  *           type: string
  *         price_cop:
- *           type: integer
+ *           type: string
  *         end_time:
  *           type: string
  *         id_user:
